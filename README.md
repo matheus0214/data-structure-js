@@ -1,1 +1,1 @@
-# continue: Page 65 - Operador exponencial
+# continue: Page 95 - Usando o metodo reduce
