@@ -36,8 +36,9 @@ class Dequeue {
   }
 
   removeBack() {
-    const result = this.items[this.count - 1];
-    delete this.items[this.count - 1];
+    this.count--;
+    const result = this.items[this.count];
+    delete this.items[this.count];
 
     return result;
   }
