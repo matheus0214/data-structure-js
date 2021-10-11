@@ -1,1 +1,1 @@
-# continue: Page 163 - Removendo elementos de qualquer posição
+# continue: Page 170 - Listas ligadas ordenadas
