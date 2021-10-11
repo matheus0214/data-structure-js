@@ -1,7 +1,7 @@
 import Node from "./models/node.js";
 import defaultEquals from "../utils/default-equals.js";
 
-class LinkedList {
+export default class LinkedList {
   constructor(equalsFn = defaultEquals) {
     this.count = 0;
     this.head = undefined;
@@ -28,13 +28,67 @@ class LinkedList {
     this.count++;
   }
 
-  insert(element, position) {}
+  insert(element, index) {
+    if (index >= 0 && index <= this.count) {
+      const node = new Node(element);
 
-  getElementAt(index) {}
+      /**
+       * 1 - 5 - 2 - 3
+       * previous (1)
+       * current (3)
+       */
+      if (index === 0) {
+        const current = this.head;
+        node.next = current;
+        this.head = node;
+      } else {
+        const previous = this.getElementAt(index - 1);
+        const current = previous.next;
 
-  remove(element) {}
+        previous.next = node;
+        node.next = current;
+      }
 
-  indexOf() {}
+      this.count++;
+
+      return true;
+    }
+
+    return false;
+  }
+
+  remove(element) {
+    const index = this.indexOf(element);
+
+    return this.removeAt(index);
+  }
+
+  getElementAt(index) {
+    if (index >= 0 && index <= this.count) {
+      let node = this.head;
+
+      for (let i = 0; i < index && node != null; i++) {
+        node = node.next;
+      }
+
+      return node;
+    }
+
+    return undefined;
+  }
+
+  indexOf(element) {
+    let current = this.head;
+    for (let i = 0; i < this.count && current != null; i++) {
+      if (this.equalsFn(element, current.element)) {
+        return i;
+      }
+
+      current = current.next;
+    }
+
+    return -1;
+  }
 
   removeAt(position) {
     if (position >= 0 && this.count > position) {
@@ -43,10 +97,16 @@ class LinkedList {
       if (position == 0) {
         this.head = current.next;
       } else {
-        for (let i = 0; i < position - 1; i++) {
-          current = current.next;
-          this.head.next = current.next;
-        }
+        /**
+         * 1 -> 2 -> 3 -> 4 (3)
+         * previous = 2
+         * current = previous.next (3)
+         * previous.next = current.next (3)
+         */
+        const previous = this.getElementAt(position - 1); // 2
+        current = previous.next; // 3
+
+        previous.next = current.next; // 4
       }
       this.count--;
 
@@ -60,28 +120,28 @@ class LinkedList {
     return this.head == null;
   }
 
-  size() {}
+  size() {
+    return this.count;
+  }
+
+  getHead() {
+    return this.head;
+  }
 
   toString() {
     if (this.isEmpty()) {
       return "";
     }
 
-    let elements = `${this.head.element}`;
-    let current = this.head.next;
+    let current = this.head;
+    let elements = `${current.element}`;
+    current = current.next;
 
-    for (let i = 1; i < this.count; i++) {
-      if (current.next == null) {
-        break;
-      } else {
-        elements += ` => ${current.element} `;
-      }
-
+    for (let i = 0; i < this.count && current != null; i++) {
+      elements += ` => ${current.element} `;
       current = current.next;
     }
 
     return elements;
   }
 }
-
-export { LinkedList };
