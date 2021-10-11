@@ -137,7 +137,7 @@ export default class LinkedList {
     let elements = `${current.element}`;
     current = current.next;
 
-    for (let i = 0; i < this.count && current != null; i++) {
+    for (let i = 1; i < this.count && current != null; i++) {
       elements += ` => ${current.element} `;
       current = current.next;
     }
