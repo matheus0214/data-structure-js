@@ -128,6 +128,11 @@ export default class LinkedList {
     return this.head;
   }
 
+  clear() {
+    this.count = 0;
+    this.head = undefined;
+  }
+
   toString() {
     if (this.isEmpty()) {
       return "";
