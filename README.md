@@ -1,1 +1,1 @@
-# continue: Page 215 - Encadeamento separado
+# continue: Page 224 - Método get
