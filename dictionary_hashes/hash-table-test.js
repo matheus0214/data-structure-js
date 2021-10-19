@@ -1,14 +1,16 @@
 import HashTable from "./hash-table.js";
 
 const hashTable = new HashTable();
-hashTable.put("Jared Poole", "hassumwim@ma.pw");
-hashTable.put("Joseph Klein", "rul@sef.pw");
-hashTable.put("Effie Clark", "hoto@az.il");
-
-console.log(hashTable.hashCode("Jared Poole") + " - Jared Poole");
-console.log(hashTable.hashCode("Joseph Klein") + " - Joseph Klein");
-console.log(hashTable.hashCode("Effie Clark") + " - Effie Clark");
-
-console.log(hashTable.get("Jared Poole"));
+hashTable.put("Ygritte", "hassumwim@ma.pw");
+hashTable.put("Jonathan", "rul@sef.pw");
+hashTable.put("Jamie", "hoto@az.il");
+hashTable.put("Jack", "ju@zoz.fm");
+hashTable.put("Jasmine", "do@bigad.ni");
+hashTable.put("Jake", "uj@jeruwojet.org");
+hashTable.put("Nathan", "be@tizma.om");
+hashTable.put("Athelstan", "alsuter@tulvu.mv");
+hashTable.put("Sue", "ge@ih.sm");
+hashTable.put("Aethelwulf", "hu@ha.mr");
+hashTable.put("Sargeras", "nireet@bupe.wf");
 
 console.log(hashTable.toString());
