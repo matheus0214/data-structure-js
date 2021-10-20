@@ -28,6 +28,70 @@ export default class HashTableLinearProbing {
     return false;
   }
 
+  get(key) {
+    const position = this.hashCode(key);
+
+    if (this.table[position] != null) {
+      if (this.table[position].key === key) {
+        return this.table[position];
+      }
+
+      let index = position + 1;
+      while (this.table[index] != null && this.table[index].key !== key) {
+        index++;
+      }
+
+      if (this.table[index] != null && this.table[index].key === key) {
+        return this.table[index].value;
+      }
+    }
+
+    return undefined;
+  }
+
+  remove(key) {
+    const position = this.hashCode(key);
+    if (this.table[position] != null) {
+      if (this.table[position].key === key) {
+        delete this.table[position];
+        this.verifyRemoveSideEffect(key, position);
+
+        return true;
+      }
+
+      let index = position + 1;
+      while (this.table[index] != null && this.table[index].key !== key) {
+        index++;
+      }
+
+      if (this.table[index] != null && this.table[index].key === key) {
+        delete this.table[position];
+        this.verifyRemoveSideEffect(key, position);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  verifyRemoveSideEffect(key, removedPosition) {
+    const hash = this.hashCode(key);
+    let index = removedPosition + 1;
+
+    while (this.table[index] != null) {
+      const posHash = this.hashCode(this.table[index].key);
+      if (posHash <= hash || posHash <= removedPosition) {
+        this.table[removedPosition] = this.table[index];
+        delete this.table[index];
+
+        removedPosition = index;
+      }
+
+      index++;
+    }
+  }
+
   loseLoseHashCode(key) {
     if (typeof key === "number") {
       return key;
@@ -43,6 +107,32 @@ export default class HashTableLinearProbing {
   }
 
   hashCode(key) {
-    return this.loseLoseHashCode(key);
+    return this.djb2HashCode(key);
+  }
+
+  djb2HashCode(key) {
+    const tableKey = this.toStrFn(key);
+
+    let hash = 5381;
+    for (let i = 0; i < tableKey.length; i++) {
+      hash = hash * 33 + tableKey.charCodeAt(i);
+    }
+
+    return hash % 1013;
+  }
+
+  toString() {
+    if (Object.keys(this.table) === 0) {
+      return "";
+    }
+
+    const keys = Object.keys(this.table);
+    let objString = `#${keys[0]} => ${this.table[keys[0]]}`;
+
+    for (let i = 1; i < keys.length; i++) {
+      objString = `${objString}\n#${keys[i]} => ${this.table[keys[i]]}`;
+    }
+
+    return objString;
   }
 }
