@@ -25,3 +25,7 @@ console.log(bst.max());
 
 console.log("_____________________________");
 console.log(bst.search(22));
+
+console.log("_____________________________");
+console.log(bst.remove(22));
+bst.inOrderTraverse(printNode);
