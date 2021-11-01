@@ -7,4 +7,7 @@ mh.insert(4);
 mh.insert(5);
 mh.insert(1);
 
-// console.log(mh.heap);
+console.log("Size:", mh.size());
+console.log("Is empty:", mh.isEmpty());
+console.log("Minimum:", mh.findMinimum());
+console.log("Extract:", mh.extract());

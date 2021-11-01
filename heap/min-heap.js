@@ -51,4 +51,59 @@ export default class MinHeap {
             parent = this.getParentIndex(index);
         }
     }
+
+    size() {
+        return this.heap.length;
+    }
+
+    isEmpty() {
+        return this.size() === 0;
+    }
+
+    findMinimum() {
+        return this.isEmpty() ? undefined : this.heap[0];
+    }
+
+    extract() {
+        if (this.isEmpty()) {
+            return undefined;
+        }
+
+        if (this.size() === 1) {
+            return this.heap.shift();
+        }
+
+        const removedValue = this.heap.shift();
+        this.shiftDown(0);
+
+        return removedValue;
+    }
+
+    shiftDown(index) {
+        let element = index;
+        const left = this.getLeftIndex(index);
+        const right = this.getRightIndex(index);
+        const size = this.size();
+
+        if (
+            left < size &&
+            this.compareFn(this.heap[element], this.heap[left]) <
+                COMPARE.GREATER_THAN
+        ) {
+            element = left;
+        }
+
+        if (
+            right < size &&
+            this.compareFn(this.heap[element], this.heap[left]) >
+                COMPARE.GREATER_THAN
+        ) {
+            element = right;
+        }
+
+        if (index !== element) {
+            swap(this.heap, index, element);
+            this.shiftDown(element);
+        }
+    }
 }
